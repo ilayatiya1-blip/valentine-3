@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+<meta charset="UTF-8">
+<title>Will you be my Valentine? ❤️</title>
+<style>
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  font-family: Arial, sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: linear-gradient(120deg,#ff758c,#ff7eb3,#ffd1dc,#ffe4e1);
+  background-size:400% 400%;
+  animation:bg 12s ease infinite;
+}
+@keyframes bg{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.card{
+  background:white;
+  padding:50px 60px;
+  border-radius:35px;
+  text-align:center;
+  box-shadow:0 30px 70px rgba(0,0,0,.35);
+  z-index:2;
+}
+h1{
+  color:#e60073;
+  font-size:2.7em;
+  margin-bottom:30px;
+}
+button{
+  background:#ff4d88;
+  border:none;
+  color:white;
+  padding:16px 45px;
+  font-size:1.3em;
+  border-radius:40px;
+  cursor:pointer;
+  margin:15px;
+  transition:.2s;
+}
+button:hover{ background:#e60073; transform:scale(1.1); }
+.floating{
+  position:absolute;
+  pointer-events:none;
+  animation:float 7s linear infinite;
+  opacity:.9;
+}
+@keyframes float{
+  0%{transform:translateY(100vh) rotate(0deg); opacity:0}
+  10%{opacity:1}
+  100%{transform:translateY(-10vh) rotate(360deg); opacity:0}
+}
+.love-wall{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:flex;
+  flex-wrap:wrap;
+  align-content:flex-start;
+  justify-content:center;
+  font-size:22px;
+  color:rgba(255,0,120,.25);
+  font-weight:bold;
+  text-align:center;
+}
+.love-wall span{ margin:10px 20px; }
+</style>
+</head>
+<body>
+
+<!-- MUSIC: שמור את הקובץ שלך באותה תיקייה ושם אותו כאן -->
+<audio id="bgMusic" autoplay loop>
+  <source src="love.mp3" type="audio/mpeg">
+</audio>
+
+<div class="love-wall" id="wall"></div>
+
+<div class="card">
+  <h1>Will you be my Valentine? 💖</h1>
+  <button onclick="yesClicked()">Yes 💕</button>
+  <button id="noBtn">No 😅</button>
+</div>
+
+<script>
+// MUSIC VOLUME
+const music = document.getElementById("bgMusic");
+music.volume = 0.5; // חצי עוצמה
+
+// LOVE WALL
+const wall = document.getElementById("wall");
+for(let i=0;i<120;i++){
+  const span = document.createElement("span");
+  span.innerHTML = "I love you Amit ❤️ 🌹 💖 ✨";
+  wall.appendChild(span);
+}
+
+// FLOATING EMOJIS
+function floating(){
+  const el = document.createElement("div");
+  el.className="floating";
+  const items=["❤️","💖","💘","💝","🌹","💕","✨","💗","💓","💞","💟","🎀","💌"];
+  el.innerHTML=items[Math.floor(Math.random()*items.length)];
+  el.style.left=Math.random()*100+"vw";
+  el.style.fontSize=(Math.random()*35+20)+"px";
+  el.style.animationDuration=(Math.random()*4+4)+"s";
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),8000);
+}
+setInterval(floating,90);
+
+// NO BUTTON RUN
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",()=>{
+  const c=document.querySelector(".card");
+  noBtn.style.position="absolute";
+  noBtn.style.left=Math.random()*(c.offsetWidth-noBtn.offsetWidth)+"px";
+  noBtn.style.top=Math.random()*(c.offsetHeight-noBtn.offsetHeight)+"px";
+});
+
+// YES SCREEN – HEART EXPLOSION FROM CENTER
+function yesClicked(){
+  document.body.innerHTML=`
+  <audio id="bgMusic" autoplay loop>
+    <source src="love.mp3" type="audio/mpeg">
+  </audio>
+  <div style="
+    height:100vh;
+    width:100vw;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:40px;
+    color:white;
+    font-family:Arial;
+    background:linear-gradient(120deg,#ff758c,#ff7eb3,#ffd1dc);
+    background-size:400% 400%;
+    animation:bg 12s ease infinite;
+    overflow:hidden;
+  ">
+    <div style="max-width:900px; z-index:2;">
+      <h1 style="font-size:3em; margin-bottom:30px;">אני אוהב אותך עמית שלי ❤️</h1>
+      <p style="font-size:1.6em; line-height:1.8;">
+        אני אוהב אותך יותר מכל דבר אחר <br>
+        את העולם שלי <br>
+        תודה שאת שלי <br>
+        כל יום שעובר אני מאוהב בך יותר ויותר <br>
+        עמית שלי, אני אוהב אותך <br><br>
+        Take you by the hand<br>
+        You’re the only one who understands
+      </p>
+    </div>
+  </div>
+  `;
+  // Explosion hearts from CENTER
+  for(let i=0;i<150;i++){
+    setTimeout(()=>heartExplosion(), i*20);
+  }
+}
+
+// Heart explosion function
+function heartExplosion(){
+  const el = document.createElement("div");
+  el.className="floating";
+  const items=["❤️","💖","💘","💝","🌹","💕","✨","💗","💓","💞","💟","🎀","💌"];
+  el.innerHTML=items[Math.floor(Math.random()*items.length)];
+  // CENTER
+  const centerX = window.innerWidth/2;
+  const centerY = window.innerHeight/2;
+  el.style.left = centerX + "px";
+  el.style.top = centerY + "px";
+  // RANDOM DIRECTION
+  const dx = (Math.random()-0.5)*600;
+  const dy = (Math.random()-0.5)*600;
+  el.style.transition = "transform 2s linear, opacity 2s linear";
+  document.body.appendChild(el);
+  setTimeout(()=>{
+    el.style.transform = `translate(${dx}px, ${dy}px) scale(${Math.random()+0.5}) rotate(${Math.random()*360}deg)`;
+    el.style.opacity = 0;
+  },10);
+  setTimeout(()=>el.remove(),2100);
+}
+</script>
+
+</body>
+</html>
